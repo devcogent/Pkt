@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "View Report";
+}
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                     <div class="card card-info">
+                        <div class="card-header">
+                            <h2 class="card-title"><b>PKT NAME</b>: <span class="badge badge-info">@Context.Session.GetString("PKTName")</span></h2>
+                         </div>
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.No</th>
+                                        <th>User Id</th>
+                                        <th>User Name</th>
+                                       <th>Total Question</th>
+                                        <th>Correct Answer</th>
+                                        <th>Wrong Answer</th>
+                                        <th>Not Attempt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            <th>1</th>
+                            <th>@TempData["EmployeeID"]</th>
+                            <th>@TempData["EmployeeName"]</th>
+                            <th>@TempData["TotalQuestion"]</th>
+                            <th>@TempData["Correct_Ans"]</th>
+                            <th>@TempData["Wrong_Ans"]</th>
+                            <th>@TempData["Not_Attempt"]</th>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}                  

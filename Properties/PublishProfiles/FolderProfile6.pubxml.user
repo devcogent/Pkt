@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\pkt</_PublishTargetUrl>
+    <History>False|2024-04-12T05:51:08.8963373Z;False|2024-04-12T11:19:41.0873270+05:30;False|2024-04-12T11:18:28.7314595+05:30;False|2024-04-12T11:17:25.8127276+05:30;False|2024-04-12T11:16:12.3617681+05:30;False|2024-04-12T11:14:06.9839849+05:30;False|2024-04-12T11:12:44.2919693+05:30;False|2024-04-12T11:11:31.1518235+05:30;False|2024-04-12T11:09:38.7767759+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

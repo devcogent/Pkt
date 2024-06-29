@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Start PKT";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>Start PKT</b></h2>
+                     </div>
+                    <div class="card-body">
+
+                        <form id="quickForm" asp-action="ViewQuestion" enctype="multipart/form-data" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div id="msg">
+                                <h5 class="mt-4 mb-4 ml-14">
+                                    Congratulation &nbsp; : &nbsp; @Context.Session.GetString("empName") 
+                                    (<span style="text-align: center;color: #c32f00;text-shadow: 1px 1px 1px white,1px 1px 1px black;"> @Context.Session.GetString("empID")</span>)
+                                    You Don't Have Any Pending Quiz
+                                </h5>
+                                </div>
+                            
+
+                            <div class="row" id="Quiz">
+                                <div class="col-md-12">
+                                    <h5 class="mt-4 mb-4 ml-14">
+                                        Welcome Online Quiz &nbsp; : &nbsp; @Context.Session.GetString("empName")
+                                        (<span style="text-align: center;color: #c32f00;text-shadow: 1px 1px 1px white,1px 1px 1px black;"> @Context.Session.GetString("empID")</span>)
+                                    </h5>   
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>PKT NAME</label>
+                                            <select class="form-control form-select select2bs4" name="PKTName" id="pktname" style="width: 100%;">
+                                                <option value="">Please Select PKT Name</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" data-select2-id="30">
+                                        <div class="form-group">
+                                        <label>Time Duration(In Minutes)</label>
+                                           <input type="text" name="duration" id="duration" class="form-control"readonly />
+                                        </div>
+                                     </div>
+                                <button class="btn btn-success float-center" type="submit">Start</button>
+                                </div>
+                         </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(function () {
+
+            $.ajax({
+                url: '/AttemptPkts/GetPktName',
+                type: 'GET',
+                success: function (response) {
+                 
+                    if (response.length > 0) {
+                        $('#Quiz').show();
+                        $('#msg').hide();
+                        $.each(response, function (key, val) {
+                            $('#pktname').append('<option value="' + val.id + '">' + val.name + '</option>')
+                        });
+                    } else {
+                        $('#Quiz').hide();
+                        $('#msg').show();
+                    }
+                   
+                }
+            });
+
+
+            $('#pktname').on('change', function () {
+                var val = $(this).val();
+                $.ajax({
+                    url: 'GetCountDuration/' + val,
+                    type: 'GET',
+                    success: function (response) {
+                       $('#duration').val(response);
+                    }
+                });
+            });
+
+
+           
+
+            $('#quickForm').on('submit', function (event) {
+
+                if ($('#quickForm').valid()) { 
+                
+                    if (confirm("Are you sure to Start Quiz?")) {
+                        //alert('Ram');
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                
+               
+            });
+            
+            
+            
+
+            $('#quickForm').validate({
+                rules: {
+                    PKTName: {
+                        required: true,
+                       
+                    },
+                    duration: {
+                        required: true
+                    },
+                },
+                messages: {
+
+                    PKTName: {
+                        required: "Please Select a PKT name",
+                        
+                    },
+                    duration: "duration time in minutes should not be blank !"
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+
+
+
+        });
+
+    </script>
+
+}

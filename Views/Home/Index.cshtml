@@ -1,0 +1,175 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@if (Context.Session.GetString("empID") == Context.Session.GetString("QH") || Context.Session.GetString("empID") == Context.Session.GetString("AH") || 
+Context.Session.GetString("empID") == Context.Session.GetString("QH") || Context.Session.GetString("empID") == Context.Session.GetString("TH"))
+{
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                            @if (ViewData["NoQuiz"] != null)
+                        {
+                                <h3>@Html.ViewData["NoQuiz"]</h3>
+                        }
+                        <p>Toata Quiz</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="/" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                            @if (ViewData["NoQuestion"] != null)
+                        {
+                                <h3>@Html.ViewData["NoQuestion"]</h3>
+                        }
+                        <p>Total Question</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="/" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                            @if (ViewData["Percentage"] != null)
+                        {
+                                <h3>@Html.ViewData["Percentage"]</h3>
+                        }
+                        <p>Complete Quiz</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                  <a href="/" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+           @*  <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        @if (ViewData["CountSubCategory"] != null)
+                        {
+                            <h3>@Html.ViewData["CountSubCategory"]</h3>
+                        } 
+                        <p>Sub Category</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="/SubCategories" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div> *@
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+    </section>
+}
+else
+{
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            @if (ViewData["CompleteQuiz"] != null)
+                            {
+                                <h3>@Html.ViewData["CompleteQuiz"]</h3>
+                            }
+                            <p>Complete Quiz</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="/" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+               @*  <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            @if (ViewData["NoQuestion"] != null)
+                            {
+                                //<h3>@Html.ViewData["NoQuestion"]</h3>
+                            }
+                            <p>Total Question</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="/" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div> *@
+                <!-- ./col -->
+@*                 <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            @if (ViewData["Percentage"] != null)
+                            {
+                                //<h3>@Html.ViewData["Percentage"]</h3>
+                            }
+                            <p>Complete Quiz</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="/" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div> *@
+                <!-- ./col -->
+                @*  <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+            <div class="inner">
+            @if (ViewData["CountSubCategory"] != null)
+            {
+            <h3>@Html.ViewData["CountSubCategory"]</h3>
+            }
+            <p>Sub Category</p>
+            </div>
+            <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="/SubCategories" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+            </div> *@
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <!-- right col -->
+            </div>
+            <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+    </section>
+}

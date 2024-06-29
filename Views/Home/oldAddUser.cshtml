@@ -1,0 +1,515 @@
+﻿@model IEnumerable<Pkt.Models.Entites.Auth>
+
+@{
+    ViewData["Title"] = "User List";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>User List</b></h2>
+                        <p class="float-right">
+                            <button type="button" class="btn btn-primary addnew" data-toggle="modal" data-target="#modal-default">
+                                Add New
+                            </button>
+                        </p>
+                    </div>
+                   <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>EMPID</th>
+                                    <th>NAME</th>
+                                    <th>OH</th>
+                                    <th>QH</th>
+                                    <th>AH</th>
+                                    <th>TH</th>
+                                    <th>DEPARTMENT</th>
+                                    <th>PROCESS</th>
+                                    <th>DESIGNATION</th>
+                                    <th>CLIENT</th>
+                                    <th>DOJ</th>
+                                    <th>GENDER</th>
+                                    <th>STATUS</th>
+                                    <th>Created On</th>
+                                    <th>Created By</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var index = 1;
+                                }
+                                @if (Model != null)
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                        <td>@index</td>
+                                        <td>@item.EmpID</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.OH</td>
+                                        <td>@item.QH</td>
+                                        <td>@item.AH</td>
+                                        <td>@item.TH</td>
+                                        <td>@item.Department</td>
+                                        <td>@item.Process</td>
+                                        <td>@item.Designation</td>
+                                        <td>@item.ClientName</td>
+                                        <td>@item.DOJ</td>
+                                        <td>@item.Gender</td>
+                                        <td>@item.Status</td>
+                                        <td>@item.CreatedOn</td>
+                                        <td>@item.CreatedBy</td>
+                                            <td>
+                                                <a href="javaScript:void(0)" onclick="edit('@item.Id')"><i class="fas fa-edit"></i></a>  &nbsp;
+                                                <a href="javascript:void(0)" onclick="deleteUser('@item.Id')"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            </td>
+                                       </tr>
+                                        index++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add User</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body card card-primary">
+                <form id="quickForm" asp-action="SaveUser" typeof="POST">
+                    <input type="hidden" name="Id" id="Id" />
+                    <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Employee Personal Details</h3>
+                            </div>
+                         <div class="card-body">
+                            <div class="row">
+                               <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Employee ID</label>
+                                <input type="text" name="EmpID" class="form-control" id="EmpID" placeholder="enter employee id">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Employee Name</label>
+                                <input type="text" name="Name" class="form-control" id="Name" placeholder="enter employee name">
+                            </div>
+                         </div>
+
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="Email" class="form-control" id="Email" placeholder="enter employee email">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="number" name="Phone" class="form-control" id="Phone" placeholder="enter employee phone">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4" data-select2-id="30">
+                             <div class="form-group">
+                                <label>Gender</label>
+                                <select class="form-select select2bs4" name="Gender" id="Gender" style="width: 100%;">
+                                    <option value="">Please Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>DOJ</label>
+                                <input type="date" name="DOJ" class="form-control" id="DOJ" placeholder="enter employee DOJ">
+                            </div>
+                           
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group" id="pwdcheck">
+                               <label>Are you Want To Change Password</label>
+                               <input type="checkbox"  class="form-checkbox" id="changepwd">
+                               </div>
+
+                            <div class="form-group" id="pwddiv">
+                                <label>Password</label>
+                                <input type="password" name="Password" class="form-control" id="Password" placeholder="enter employee Password">
+                            </div>
+                        </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Employee Department Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Is TH</label>
+                                <select class="form-select select2bs4" name="TH" id="TH" style="width: 100%;">
+                                    <option value="">Please Select OH</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Is AH</label>
+                                <select class="form-select select2bs4" name="AH" id="AH" style="width: 100%;">
+                                    <option value="">Please Select OH</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <select class="form-select select2bs4" name="Department" id="Department" style="width: 100%;">
+                                    <option value="">Please Select Department</option>
+                                    <option value="47">Software Development</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Designation</label>
+                                <select class="form-select select2bs4" name="Designation" id="Designation" style="width: 100%;">
+                                    <option value="">Please Select Designation</option>
+                                    <option value="1">Executive</option>
+                                    <option value="2">Senior Executive</option>
+                                    <option value="3">Team Leader</option>
+                                    <option value="5">Assistant Manager</option>
+                                    <option value="6">Manager</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-select select2bs4" name="Status" id="Status" style="width: 100%;">
+                                    <option value="">Please Select Status</option>
+                                    <option value="6">6</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Process</label>
+                                <select class="form-select select2bs4" name="Process" id="Process" style="width: 100%;">
+                                    <option value="">Please Select Process</option>
+                                    <option value="Software Development">Software Development</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Client</label>
+                                <select class="form-select select2bs4" name="Client" id="Client" style="width: 100%;">
+                                    <option value="">Please Select Client</option>
+                                    <option value="1">Information Technology</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Is OH</label>
+                                <select class="form-select select2bs4" name="OH" id="OH" style="width: 100%;">
+                                    <option value="">Please Select OH</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                         </div>
+
+                        <div class="col-md-4" data-select2-id="30">
+                            <div class="form-group">
+                                <label>Is QH</label>
+                                <select class="form-select select2bs4" name="QH" id="QH" style="width: 100%;">
+                                    <option value="">Please Select OH</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        
+                       </div>
+                        </div>
+                     </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content">
+                @* <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> *@
+                <button type="button" class="btn btn-danger float-md-right" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ <script>
+
+        $(document).ready(function () {
+            $("#changepwd").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#pwddiv").show();
+                } else {
+                    $("#pwddiv").hide();
+                }
+            });
+
+            $(".addnew").click(function () {
+                $("#pwdcheck").hide();
+                $('#quickForm').removeAttr('action');
+                $('#quickForm').attr('action', 'SaveUser');
+                $('.modal-title').text('Add User');
+                document.getElementById('quickForm').reset();
+            });
+        });
+
+
+        function deleteUser(id)
+        {
+            if (confirm("Are you sure want to delete ")) { 
+                $.ajax({
+                    url: "/Home/DeleteUser/" + id,
+                    type: "GET",
+                    success: function (response) {
+
+                        if (response.success){
+                            toastr.success(response.message);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        }
+
+                        if (response.error){
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            }
+        }
+
+
+        function edit(id) {
+         
+            $.ajax({
+                url:"/Home/EditUser/"+id,
+                type:"GET",
+                success: function (response) {
+                    console.log(response);
+                    $('#Id').val(response.id);
+                    $("#EmpID").val(response.empID);
+                    $("#Phone").val(response.phone);
+                    $("#Email").val(response.email);
+                    $("#Department").val(response.cmid).change();
+                    $("#Name").val(response.name);
+                    $("#Client").val(response.clientID).change();
+                    var Qh =  response.qh == "No" ? response.qh : "Yes";
+                    $("#QH").val(Qh).change();;
+                    var AH = response.ah == "No" ? response.ah : "Yes";
+                    $("#AH").val(AH).change();;
+                    var TH = response.th == "No" ? response.th : "Yes";
+                    $("#TH").val(TH).change();;
+                    var OH = response.oh == "No" ? response.oh : "Yes";
+                    $("#OH").val(OH).change();
+                    $("#Status").val(response.status).change();
+                    $("#DOJ").val(response.doj);
+                    $("#Gender").val(response.gender).change();
+                    $("#Designation").val(response.designationID).change();
+                    $("#Process").val(response.process).change();
+                     $('#quickForm').removeAttr('action');
+                    $('#quickForm').attr('action', 'UpdateUser');
+                    $('.modal-title').text('Update User')
+                    $('#pwddiv').hide();
+                    $("#pwdcheck").show();
+                    $('#modal-default').modal('show');
+
+                }
+            });
+
+        }
+
+       $(function () {
+           $('#quickForm').validate({
+                rules: {
+                    EmpID: {
+                        required: true,
+                    },
+                    Gender: {
+                        required: true,
+                    },
+                    Department: {
+                        required: true,
+                    },
+                    Designation: {
+                        required: true,
+                    },
+                    Client: {
+                        required: true,
+                    },
+                    Email: {
+                        required: true,
+                        email:true
+                        
+                    },
+                    Password: {
+                        required:true,
+                        minlength:5
+                     },
+                    Phone: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10
+                    },
+                    Status: {
+                        required: true,
+                    },
+                    AH: {
+                        required: true,
+                    },
+                    TH: {
+                        required: true,
+                    },
+                    QH: {
+                        required: true,
+                    },
+                    OH: {
+                        required: true,
+                    },
+                    Name: {
+                        required: true,
+                    },
+                    DOJ: {
+                        required: true
+                    },
+                    Process: {
+                        required: true
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("#quickForm").on("submit", function (e) {
+          e.preventDefault();
+            if ($("#quickForm").valid()) {
+
+
+                var ProcessText = $('#Process option:selected').text();
+                var DesignationTetx = $('#Designation option:selected').text();
+                var clientName = $('#Client option:selected').text();
+
+                $.ajax({
+                    type: "post",
+                    url: $(this).attr('action'),
+                    dataType: 'text',
+                    headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
+                    data: {
+                        Id: $("#Id").val(),
+                        EmpID : $("#EmpID").val(),
+                        Phone :  $("#Phone").val(),
+                        Email :  $("#Email").val(),
+                        CMID: $("#Department").val(),
+                        Name :  $("#Name").val(),
+                        ClientID : $("#Client").val(),
+                        ClientName: clientName,
+                        QH :  $("#QH").val(),
+                        AH :  $("#AH").val(),
+                        TH :  $("#TH").val(),
+                        OH :  $("#OH").val(),
+                        Department: $('#Department option:selected').text(),
+                        Status :  $("#Status").val(),
+                        DOJ : $("#DOJ").val(),
+                        Gender : $("#Gender").val(),
+                        Designation : DesignationTetx,
+                        DesignationID : $("#Designation").val(),
+                        Process : ProcessText,
+                        Password : $("#Password").val()
+                    },
+                    success: function (response) {
+                        obj = JSON.parse(response);
+                        if (obj.success) {
+                            toastr.success(obj.message);
+                            setTimeout(function () {
+                                $('#modal-default').modal('hide');
+                                location.reload();
+                            }, 1000);
+                        }
+
+                        if (obj.error) {
+                            toastr.error(obj.message);
+                        }
+
+
+                    },
+
+                });
+
+            }
+            else {
+                return false;
+            }
+
+        });
+
+
+        
+
+    </script>
+}

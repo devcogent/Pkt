@@ -1,0 +1,432 @@
+﻿@model IEnumerable<Pkt.Models.Entites.ManagePkt>
+
+@{
+    ViewData["Title"] = "View PKT";
+}
+
+<section class="content" id="editDiv">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                  <div class="card card-info">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>Manage PKT</b></h2>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form id="quickForm" action="/ManagePkts/EditManagePkt" method="post">
+                            <input type="hidden" name="Id" id="Id" />
+                            <div id="msg"></div>
+                                <div class="row">
+                                   
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Process</label>
+
+                                        <select class="form-select select2bs4" name="Process" id="Process" style="width: 100%;">
+                                                <option value="">Please Select Process</option>
+                                               
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Start Date</label>
+                                            <div class="input-group date" id="start_date" data-target-input="nearest">
+                                            <input type="text" name="StartDate" id="StartDate" class="form-control datetimepicker-input" data-target="#start_date" />
+                                            <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
+
+                                    <div class="col-md-4" data-select2-id="30">
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Test Duration</label>
+                                        <input type="number" name="TestDuration" class="form-control" id="TestDuration" placeholder="Enter Duration in minutes">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>End Date</label>
+                                        <div class="input-group date" id="end_date" data-target-input="nearest">
+                                            <input type="text" name="EndDate" id="EndDate" class="form-control datetimepicker-input" data-target="#end_date" />
+                                            <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                       
+                                    
+                                    </div>
+
+                                    <div class="col-md-4" data-select2-id="30">
+                                        <div class="form-group">
+                                            <label>PKT Name</label>
+                                        <select class="form-select select2bs4" name="Name" id="Name" style="width: 100%;">
+                                            <option value="">Please Select PKT Name</option>
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">No. Question</label>
+                                            <input type="number" name="NoQuestion" class="form-control" id="NoQuestion" placeholder="Enter No Question">
+                                        </div>
+                                    </div>
+                                <div class="col-md-4" data-select2-id="30">
+                                    @*  <div class="form-group">
+                                    <label>PKT For</label>
+                                    <select class="form-select select2bs4" name="PKTForText" id="PKTForText" style="width: 100%;">
+                                    <option value="">Please Select For</option>
+                                    <option value="Training">Training</option>
+                                    <option value="OJT">OJT</option>
+                                    <option value="OnFloorCSA">On Floor CSA</option>
+                                    <option value="OnFloorSupport">On Floor Support</option>
+                                    <option value="OnFloorALL">On Floor All</option>
+                                    </select>
+                                    </div> *@
+                                 </div>
+                                
+                                </div>
+                               <div class="card-footer">
+                                     <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                             </form>
+                     </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+<section class="content" >
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h2 class="card-title">View PKT</h2>
+                       
+                    </div>
+                    @if (ViewBag.Success != null)
+                    {
+                        <div class="alert alert-success alert-dismissible">
+                            <strong>Great !</strong>@ViewBag.Success
+                        </div>
+                    }
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>PKT Name</th>
+                                    <th>Test-Duration</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>No. Of Question</th>
+                                    <th>Process</th>
+                                    <th>Created By</th>
+                                    <th>Created On</th>
+                                    <th>Action</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int index = 1;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@index</td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-info"><i class="fa fa-clock" aria-hidden="true"></i> @Html.DisplayFor(modelItem => item.TestDuration) Minutes</span>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StartDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EndDate)
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-info">@Html.DisplayFor(modelItem => item.NoQuestion) &nbsp; <i class="fa fa-question" aria-hidden="true"></i> Question</span>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Process)
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-success"><i class="fas fa-user">&nbsp;</i>@Html.DisplayFor(modelItem => item.CreatedBy)</span>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CreatedOn)
+                                        </td>
+                                        <td>
+                                            @* <a asp-action="Edit" id="edit" asp-route-id="@item.Id">
+                                        <a asp-action="Delete" asp-route-id="@item.Id">
+                                        *@
+
+                                           @*  @if (!string.IsNullOrEmpty(item.EndDate) && !string.IsNullOrEmpty(item.StartDate))
+                                            { *@
+
+                                               @*  @if (Convert.ToDateTime(item.EndDate) >= DateTime.Now && Convert.ToDateTime(item.StartDate) <= DateTime.Now)
+                                                
+                                                @*  if (Convert.ToDateTime(item.StartDate) > DateTime.Now) *@
+
+                                                @* DateTime startDate;
+                                                DateTime.TryParse(item.StartDate, out startDate); *@
+                                                @if (item.EndDate != null && item.StartDate != null)
+                                                {
+
+                                                if (item.StartDate > DateTime.Now)
+                                                {
+                                                    //allow edit
+                                                    <a href="javaScript:void(0)"><i class="fas fa-edit btn-edit" id="@item.Id" style="color:green" title="edit"></i> &nbsp;</a>
+                                                    <a href="javaScript:void(0)"> <i class="fas fa-trash btn-delete" id="@item.Id" title="delete" style="color:red"></i></a>
+                                                }
+                                                else
+                                                {
+                                                    //not editable
+                                                    <a href="javaScript:void(0)"><i class="fas fa-edit" style="color:green" title="not editable"></i> &nbsp;</a>
+                                                    <a href="javaScript:void(0)"><i class="fas fa-trash"  title="Not deleteable" style="color:red"></i></a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                            //allow edit
+                                            <a href="javaScript:void(0)"> <i class="fas fa-edit btn-edit" id="@item.Id" style="color:green" title="edit"></i> &nbsp;</a>
+                                            <a href="javaScript:void(0)"> <i class="fas fa-trash btn-delete" id="@item.Id" title="delete" style="color:red"></i></a>
+                                            }
+                                        </td>
+
+                                    </tr>
+                                    index++;
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(function () {
+
+            $('.btn-delete').on('click', function () {
+                   var id = $(this).attr('id');
+                  if(confirm("are you sure want to delete ?"))
+                   {
+                       $.ajax({
+                        url: '/ManagePkts/delete/' + id,
+                           type :'GET',
+                           success: function(response) {
+                               if (response.success) {
+                                toastr.success(response.message);
+                                   setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+                                }
+                               if (response.error) {
+                                toastr.error(response.message);
+                               }
+                           }
+                       });
+                   }
+                   else{
+                    
+                   }
+
+            });
+
+
+
+            $('#editDiv').hide();
+
+            $('.btn-edit').on('click', function () {
+
+                $('#Id').val($(this).attr('id'));
+                $.ajax({
+                    url: '/ManagePkts/GetPKTRow/' + $(this).attr('id'),
+                    type:'GET',
+                    success: function (response) {
+                        const date = new Date(response.result.startDate);
+                        const formattedDateTime = date.toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                        $('#Name').val(response.result.name).change();
+                        $('#TestDuration').val(response.result.testDuration);
+                        $('#Process').val(response.result.cm_Id).change();
+                        $('#StartDate').val(response.result.startDate);
+                        $('#EndDate').val(response.result.endDate);
+                        $('#PKTForText').val(response.result.pktForText).change();
+                        var pkt = response.result.name;
+                        $.ajax({
+                            url: '/ManagePkts/GetCountQuestion?PKTName='+pkt,
+                            type: 'get',
+                            success: function (response) {
+                               $('#NoQuestion').val(response).attr('readonly', true);
+                            }
+                        });
+                    },
+                });
+                $('#editDiv').show();
+            });
+
+
+            $.ajax({
+                url: '/ManagePkts/GetUniquePKT',
+                type:'GET',
+                success: function (response) {
+                    $.each(response, function (key, val) {
+                        $('#Name').append('<option value="' + val.pktName + '">' + val.pktName + '</option>')
+                    });
+                 }
+             });
+
+            $.ajax({
+                url: '/ManagePkts/GetProcess',
+                type: 'GET',
+                success: function (response) {
+                    $.each(response, function (key, val) {
+                        $('#Process').append('<option value="' + val.id + '">' + val.clientName + '|' + val.processName + '|' + val.processName + '</option> ')
+                    });
+                }
+            });
+
+            $('#quickForm').validate({
+                rules: {
+                    PKTForText: {
+                        required: true,
+                    },
+                    Name: {
+                        required: true,
+                        
+                    },
+                    TestDuration: {
+                        required: true
+                    },
+                    Process: {
+                        required: true
+                    },
+                    EndDate: {
+                        required: true,
+                    },
+                    StartDate: {
+                        required: true,
+                    },
+                    NoQuestion: {
+                        required:true,
+                    },
+                },
+                messages: {
+                    Process: {
+                        required: "Please Select Process name"
+                    },
+                    pktfor: {
+                        required: "Please enter a PKT name",
+
+                    },
+                    name: {
+                        required: "Please provide a PKT name",
+                     
+                    },
+                    duration: "Please enter duration in minutes"
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $("#quickForm").on("submit", function (e) {
+            e.preventDefault();
+
+
+            if ($("#quickForm").valid()) {
+
+                // Your DateTime strings
+                var dateTimeString1 = $("#StartDate").val();// '08-04-2024 05:08:29';
+                var dateTimeString2 = $("#EndDate").val(); //'09-04-2024 05:08:19';
+
+                // Convert DateTime strings to Date objects
+                var date1 = new Date(dateTimeString1);
+                var date2 = new Date(dateTimeString2);
+
+                // Compare the Date objects
+                if (date1 > date2) {
+                    $('#msg').addClass('text-danger').text('Start Date Should be less than end date');
+                    return false;
+                } 
+
+            
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: {
+                        Name : $('#Name').val(),
+                        Process : $('#Process option:selected').text(),
+                        Cm_Id:$('#Process').val(),
+                        StartDate : $('#StartDate').val(),
+                        EndDate : $('#EndDate').val(),
+                        PKTForText : "All",
+                        TestDuration : $('#TestDuration').val(),
+                        NoQuestion : $('#NoQuestion').val(),
+                        Id : $('#Id').val(),
+                    },
+                    success: function (response) {
+                        
+                        if (response.success) { 
+                            toastr.success(response.message);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        }
+                        if (response.error){
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                       
+                    }
+                });
+
+            }
+            else {
+                return false;
+            }
+
+
+        });
+    </script>
+}
+

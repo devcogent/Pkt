@@ -1,0 +1,483 @@
+﻿@model IEnumerable<Pkt.Models.Entites.CommonQuestion>
+@{
+    ViewData["Title"] = "Manage Question";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>Add Question</b></h2>
+                        <p class="float-right">
+
+
+                            @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+                                Add New
+                            </button> *@
+                            @*data-toggle="modal" data-target="#modal-default"*@
+                        </p>
+                    </div>
+                    @if (ViewBag.Success != null)
+                    {
+                        <div class="alert alert-success alert-dismissible">
+                            <strong>Great !</strong> @ViewBag.Success
+                        </div>
+                    }
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="modal-body card">
+                            <form id="quickForm" asp-action="Create" enctype="multipart/form-data" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>PKT NAME</label>
+                                            <select class="form-control form-select select2bs4" name="PKTName" id="pktname" style="width: 100%;">
+                                                <option value="">Please Select PKT Name</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" data-select2-id="30">
+                                        <div class="form-group">
+                                            <label>UPLOAD TYPE</label>
+                                            <select class="form-control select2bs4" name="UploadType" id="pktfor" style="width: 100%;">
+                                                <option value="">Please Select For</option>
+                                                <option value="Upload">Upload</option>
+                                                <option value="Manual">Manual</option>
+                                                <option value="Question Bank">Question Bank</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                </div>
+
+
+
+
+                                        <!-- /.row  table row -->
+                                        <div class="row questionDiv">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                  <div class="card-body">
+                                                        <table id="example2" class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                <input class="form-group" type="checkbox" id="checkboxPrimary3">
+                                                                    </th>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Question)
+                                                                    </th>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Option1)
+                                                                    </th>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Option2)
+                                                                    </th>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Option3)
+                                                                    </th>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Option4)
+                                                                    </th>
+                                                                    <th>
+                                                                        @Html.DisplayNameFor(model => model.Answer)
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @{
+                                                                    int index = 1;
+                                                                }
+                                                                @foreach (var item in Model)
+                                                                {
+                                                                    <tr>
+                                                                <td>
+
+                                                                    <input type="checkbox" class="form-group" id="checkboxPrimary3" name="Ques" value="@item.Id">
+
+                                                                @* <td>@Html.CheckBoxFor(modelItem => Id.Checked)</td> *@
+                                                                </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Question)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Option1)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Option2)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Option3)
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Option4)
+                                                                        </td>   
+                                                                        <td>
+                                                                            @Html.DisplayFor(modelItem => item.Answer)
+                                                                        </td>
+
+                                                                        
+                                                                    </tr>
+
+                                                                    index++;
+
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+
+                                            </div>
+                                            <!-- /.col -->
+                                        </div>
+                                         <!-- /.row table row close-->
+                                <!-- /.row upload file row open-->
+                                        <div class="row uploadDiv">
+
+                                    <div class="col-md-12">
+
+                                        <div class="card card-default">
+                                           @*  <div class="card-header">
+                                                <h3 class="card-title"><b>Add Common Question</b></h3>
+                                            </div> *@
+
+
+@*                                             <form runat="server" id="quickForm" method="post" action="/CommonQuestions/UploadExcel" enctype="multipart/form-data">
+ *@                                                <div class="card-body row">
+                                                    <div class="form-group col-md-6 col-lg-6">
+                                                    <label for="exampleInputEmail1">Excel File</label><span class="text-danger">*</span>
+                                                        <input type="file" name="file" class="form-control" accept=".xlsx, .xls, .csv" id="exampleInputEmail1">
+                                                    </div>
+                                                    <div class="form-group col-md-3 col-lg-3">
+                                                        &nbsp;<label for="exampleInputEmail1"> </label>
+                                                        <div class="mt-2">
+                                                            &nbsp; &nbsp; <a href="~/dist/UploadFormatePapper.csv" title="upload format"><i class="fa fa-download" aria-hidden="true"> &nbsp; Download Format</i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-3 col-lg-3">
+                                                        @* <div class="mt-4">
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </div> *@
+                                                    </div>
+                                                </div>
+                                            @* </form> *@
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.row upload file row close-->
+
+                                <div class="row manualDiv">
+                                     <div class="col-md-12">
+                                        <div class="card card-default">
+                                             <div class="card-body">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Question</label><span class="text-danger">*</span>
+                                                    <input type="text" name="Question" class="form-control" id="Question" placeholder="Enter Question">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Option 1</label><span class="text-danger">*</span>
+                                                    <input type="text" name="Option1" class="form-control" id="Option1" placeholder="Enter Option-1">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Option 2</label><span class="text-danger">*</span>
+                                                    <input type="text" name="Option2" class="form-control" id="Option2" placeholder="Enter Option-2">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Option 3</label><span class="text-danger">*</span>
+                                                    <input type="text" name="Option3" class="form-control" id="Option3" placeholder="Enter Option-3">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Option 4</label><span class="text-danger">*</span>
+                                                    <input type="text" name="Option4" class="form-control" id="Option4" placeholder="Enter Option-4">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Correct Answer</label><span class="text-danger">*</span>
+                                                    <input type="number" name="Answer" class="form-control" id="Answer" placeholder="type here 1 if Option 1 is Correct, 2 if Option 2 is Correct">
+                                                </div>
+                                                <div class="form-group">
+                                                    @* <div class="mt-4">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div> *@
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
+                                 </div>
+
+                                    <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row questionList">
+            <div class="col-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h2 class="card-title"><b>View Question</b></h2>
+
+                    </div>
+
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        PKT Name
+                                    </th>
+                                    <th>
+                                        Upload Type
+                                    </th>
+                                    <th>
+                                        Question
+                                    </th>
+                                    <th>
+                                        Answer
+                                    </th>
+                                    <th>
+                                        Created On
+                                    </th>
+                                    <th>
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="QuesTable">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        $(function () {
+
+            $('#deleteQuestion').on('click', function () {
+
+                alert('gfgfg');
+            });
+
+            $('.questionList').hide();
+            $.ajax({
+                url: "/ManagePkts/GetPktList",
+                type:'get',
+                success: function (response) {
+                    console.log(response);
+                    $.each(response, function (item , value) {
+                        $('#pktname').append('<Option value="' + value.name + '">' + value.name + '</Option>');
+                    });
+                }
+             });
+
+            $('#pktname').on('change', function () {
+
+                if ($(this).val() == "")
+                {
+                    $('.questionList').hide();
+                }
+                  $.ajax({
+                    url:'/ManagePkts/QuestionList',
+                    type:'POST',
+                    dataType: 'text',
+                    headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
+                    data: {
+                        PKTName: $(this).val(),
+                    },
+                    success: function (response) {
+                        if (response.length > 0) {
+                            $('.questionList').show();
+                            var jsonArray = JSON.parse(response);
+                            var html = '';
+                            $.each(jsonArray, function (key, val) {
+                                html += '<tr>' + '<td>' + val.pktName + '</td>' + '<td>' + val.uploadType + '</td>' + '<td>' + val.question + '</td>' + '<td>' + val.answer + '</td>' + '<td>' + val.createdOn + '</td>' + '<td><a  href="javaScript:void(0)"  onclick="function edit();" id="' + val.id + '"><i class="fas fa-edit editQuestion"></i></a>&nbsp; <a href="javaScript:void(0)"  id="' + val.id + '"> <i class="fas fa-trash"></i></a></td>';
+                            });
+                          $('#QuesTable').html(html);
+                         }
+                     }
+                });
+            
+            });
+
+            
+
+            $('.uploadDiv').hide();
+            $('.questionDiv').hide();
+            $('.manualDiv').hide();
+            
+
+            $('#pktfor').on('change', function () {
+                 var pktfor = $(this).val();
+                if (pktfor == 'Upload') {
+                    $('.uploadDiv').show();
+                    $('.questionDiv').hide();
+                    $('.manualDiv').hide();
+                }
+                if (pktfor == 'Question Bank') {
+                    $('.uploadDiv').hide();
+                    $('.questionDiv').show();
+                    $('.manualDiv').hide();
+                }
+                if (pktfor == 'Manual') {
+                    $('.uploadDiv').hide();
+                    $('.questionDiv').hide();
+                    $('.manualDiv').show();
+                }
+                if (pktfor == '') {
+                    $('.uploadDiv').hide();
+                    $('.questionDiv').hide();
+                    $('.manualDiv').hide();
+                }
+
+            });
+
+            $('#quickForm').validate({
+                rules: {
+                    UploadType: {
+                        required: true,
+                    },
+                    PKTName: {
+                        required: true,
+                    },
+                    file: {
+                        required:true,
+                    },
+                    Question: {
+                        required :true,
+                    },
+                     Option1: {
+                        required :true,
+                    },
+                    Option2: {
+                        required :true,
+                    },
+                    Option3: {
+                        required: true,
+                    },
+                    Option4: {
+                        required: true,
+                    },
+                    Answer: {
+                        required: true,
+                    },
+                    Ques: {
+                        required :true,
+                    }
+
+
+                },
+                messages: {
+                    UploadType: {
+                        required: "Please Select Upload Type"
+                    },
+                    PKTName: {
+                        required: "Please enter a PKT name",
+                     },
+                    file: {
+                        required: "Please select a excel file",
+                    }, Question: {
+                        required: "Please Enter Question ",
+                    }
+                    
+                  
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+
+
+            $('.deleteQuestion').on('click', function () {
+
+                alert('i ma delete');
+            });
+
+            $('.editQuestion').on('click', function () {
+
+                alert('i ma edit');
+            });
+
+        });
+    </script>
+
+@*     <script type="text/javascript">
+        $("#quickForm").on("submit", function (e) {
+            e.preventDefault();
+
+            if ($("#quickForm").valid()) {
+
+                $.ajax({
+                    type: "post",
+                    url: $(this).attr('action'),
+                    dataType: 'text',
+                    headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
+                    data: {
+                        Name: $('#name').val(),
+                        TestDuration: $('#duration').val(),
+                        PKTFor: $('#pktfor').val(),
+                        Process: $('#process').val(),
+                        CreatedBy: 'Dev'
+                    },
+                    success: function (response) {
+                        obj = JSON.parse(response);
+                        if (obj.success) {
+                            toastr.success(obj.message);
+                            setTimeout(function () {
+                                $('#modal-default').modal('hide');
+                                location.reload();
+                            }, 1000);
+                        }
+
+                        if (obj.error) {
+                            toastr.error(obj.message);
+                        }
+
+
+                    },
+
+                });
+
+            }
+            else {
+                return false;
+            }
+
+
+        });
+    </script> *@
+}
