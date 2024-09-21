@@ -149,8 +149,21 @@
     }
 
     <script>
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
+
         $.ajax({
-            url: '/ManagePkts/GetProcess',
+            url: controllerUrl + '/ManagePkts/GetProcess',
             type: 'GET',
             success: function (response) {
                 $.each(response, function (key, val) {

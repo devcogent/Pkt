@@ -231,6 +231,20 @@
     }
 
     <script>
+
+
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
         $(function () {
 
             $('.btn-delete').on('click', function () {
@@ -238,7 +252,7 @@
                   if(confirm("are you sure want to delete ?"))
                    {
                        $.ajax({
-                        url: '/ManagePkts/delete/' + id,
+                           url: controllerUrl + '/ManagePkts/delete/' + id,
                            type :'GET',
                            success: function(response) {
                                if (response.success) {
@@ -267,7 +281,7 @@
 
                 $('#Id').val($(this).attr('id'));
                 $.ajax({
-                    url: '/ManagePkts/GetPKTRow/' + $(this).attr('id'),
+                    url: controllerUrl + '/ManagePkts/GetPKTRow/' + $(this).attr('id'),
                     type:'GET',
                     success: function (response) {
                         const date = new Date(response.result.startDate);
@@ -293,7 +307,7 @@
 
 
             $.ajax({
-                url: '/ManagePkts/GetUniquePKT',
+                url: controllerUrl + '/ManagePkts/GetUniquePKT',
                 type:'GET',
                 success: function (response) {
                     $.each(response, function (key, val) {
@@ -303,7 +317,7 @@
              });
 
             $.ajax({
-                url: '/ManagePkts/GetProcess',
+                url: controllerUrl + '/ManagePkts/GetProcess',
                 type: 'GET',
                 success: function (response) {
                     $.each(response, function (key, val) {
@@ -367,6 +381,10 @@
     </script>
 
     <script type="text/javascript">
+
+
+        
+
         $("#quickForm").on("submit", function (e) {
             e.preventDefault();
 
@@ -386,11 +404,9 @@
                     $('#msg').addClass('text-danger').text('Start Date Should be less than end date');
                     return false;
                 } 
-
-            
-
+              
                 $.ajax({
-                    url: $(this).attr('action'),
+                    url: controllerUrl + $(this).attr('action'),
                     type: 'POST',
                     data: {
                         Name : $('#Name').val(),

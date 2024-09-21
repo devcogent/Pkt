@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper.Configuration;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,6 +14,8 @@ using Microsoft.Extensions.Primitives;
 using Pkt.Data;
 using Pkt.Models.Entites;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using CsvHelper;
+
 
 namespace Pkt.Controllers
 {
@@ -38,7 +42,6 @@ namespace Pkt.Controllers
 
             if (userId == OH || userId == QH || userId == AH || userId == TH)
             {
-
                 return View(await _context.commonquestions.ToListAsync());
             }
             else
@@ -99,42 +102,93 @@ namespace Pkt.Controllers
                             await file.CopyToAsync(stream);
                         }
 
-                    using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                    var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+                    if (fileExtension == ".csv")
                     {
-                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        using (var reader = new StreamReader(filePath))
+                        using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
-
-                            do
+                            HasHeaderRecord = true, // Assuming the first row is a header
+                            IgnoreBlankLines = true
+                        }))
+                        {
+                            var records = csv.GetRecords<dynamic>().ToList();
+                            foreach (var record in records)
                             {
-                                bool isHeaderRowSkipped = false;
-
-                                while (reader.Read())
+                                var recordDict = (IDictionary<string, object>)record;
+                                 // Assuming the CSV columns are named accordingly
+                                var question = recordDict.ContainsKey(" Question") ? recordDict[" Question"].ToString() : string.Empty;
+                                var option1 = recordDict.ContainsKey(" Option1") ? recordDict[" Option1"].ToString() : string.Empty;
+                                var option2 = recordDict.ContainsKey(" Option2") ? recordDict[" Option2"].ToString() : string.Empty;
+                                var option3 = recordDict.ContainsKey(" Option3") ? recordDict[" Option3"].ToString() : string.Empty;
+                                var option4 = recordDict.ContainsKey(" Option4") ? recordDict[" Option4"].ToString() : string.Empty;
+                                var answer = recordDict.ContainsKey(" Answer") ? recordDict[" Answer"].ToString() : string.Empty;
+                                var manage = new ManageQuestion
                                 {
-                                    if (!isHeaderRowSkipped)
+                                    PKTName = manageQuestion.PKTName,
+                                    UploadType = manageQuestion.UploadType,
+                                    Question = question,
+                                    Option1 = option1,
+                                    Option2 = option2,
+                                    Option3 = option3,
+                                    Option4 = option4,
+                                    Answer = answer,
+                                    CreatedBy = employeeID
+                                };
+
+                                if (!_context.manageQuestions.Any(d => d.Question == question && d.PKTName == manageQuestion.PKTName))
+                                {
+                                    _context.manageQuestions.Add(manage);
+                                    await _context.SaveChangesAsync();
+                                }
+                            }
+                        }
+
+                    }
+                        
+                    
+                    if (fileExtension == ".xlsx")
+                    {
+                        using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                        {
+                            using (var reader = ExcelReaderFactory.CreateReader(stream))
+                            {
+
+                                do
+                                {
+                                    bool isHeaderRowSkipped = false;
+
+                                    while (reader.Read())
                                     {
-                                        isHeaderRowSkipped = true;
-                                        continue;
+                                        if (!isHeaderRowSkipped)
+                                        {
+                                            isHeaderRowSkipped = true;
+                                            continue;
+                                        }
+                                        ManageQuestion manage = new ManageQuestion();
+                                        manage.PKTName = manageQuestion.PKTName;
+                                        manage.UploadType = manageQuestion.UploadType;
+                                        manage.Question = reader.GetValue(0).ToString();
+                                        manage.Option1 = reader.GetValue(1).ToString();
+                                        manage.Option2 = reader.GetValue(2).ToString();
+                                        manage.Option3 = reader.GetValue(3).ToString();
+                                        manage.Option4 = reader.GetValue(4).ToString();
+                                        manage.Answer = reader.GetValue(5).ToString();
+                                        manage.CreatedBy = employeeID;
+                                        if (!_context.manageQuestions.Any(d => d.Question == reader.GetValue(0).ToString() && d.PKTName == manageQuestion.PKTName))
+                                        {
+                                            _context.manageQuestions.Add(manage);
+                                            _context.SaveChanges();
+                                        }
+                                        else { continue; }
                                     }
-                                    ManageQuestion manage = new ManageQuestion();
-                                    manage.PKTName = manageQuestion.PKTName;
-                                    manage.UploadType = manageQuestion.UploadType;
-                                    manage.Question = reader.GetValue(0).ToString();
-                                    manage.Option1 = reader.GetValue(1).ToString();
-                                    manage.Option2 = reader.GetValue(2).ToString();
-                                    manage.Option3 = reader.GetValue(3).ToString();
-                                    manage.Option4 = reader.GetValue(4).ToString();
-                                    manage.Answer = reader.GetValue(5).ToString();
-                                    manage.CreatedBy = employeeID;
-                                    if (!_context.manageQuestions.Any(d => d.Question == reader.GetValue(0).ToString() && d.PKTName ==  manageQuestion.PKTName))
-                                    {
-                                        _context.manageQuestions.Add(manage);
-                                        _context.SaveChanges();
-                                    }
-                                    else { continue; }
-                                 }
-                            } while (reader.NextResult());
-                         }
-                     }
+                                } while (reader.NextResult());
+                            }
+                        }
+                    }
+
+                    
                   }
                         TempData["Success"] = "Excel Sheet Data Imported Successfully";
                         return RedirectToAction(nameof(Index));
@@ -190,6 +244,8 @@ namespace Pkt.Controllers
 
         private bool ManageQuestionExists(int id)
         {
+
+
             return _context.manageQuestions.Any(e => e.Id == id);
         }
     }

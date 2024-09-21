@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper.Configuration;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pkt.Data;
+using Pkt.Models;
 using Pkt.Models.Entites;
+using CsvHelper;
+using Microsoft.AspNetCore.Identity;
+
+
 
 namespace Pkt.Controllers
 {
@@ -69,7 +76,6 @@ namespace Pkt.Controllers
 
         // POST: CommonQuestions/UploadExcel
          [HttpPost]
-         
         public async Task<IActionResult> UploadExcel(IFormFile file)
         {
            
@@ -87,42 +93,95 @@ namespace Pkt.Controllers
                 {
                    await file.CopyToAsync(stream);
                 }
+               var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+               
 
-                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                if (fileExtension == ".csv")
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    using (var reader = new StreamReader(filePath))
+                    using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
                     {
-                       
-                        do
+                        HasHeaderRecord = true, // Assuming the first row is a header
+                        IgnoreBlankLines = true
+                    }))
+                    {
+                        // Read records from the CSV
+                        var records = csv.GetRecords<dynamic>().ToList();
+
+                        foreach (var record in records)
                         {
-                            bool isHeaderRowSkipped = false;
+                            var recordDict = (IDictionary<string, object>)record;
 
-                            while (reader.Read())
+                    
+
+                            // Access values with trimming for any extra spaces
+                            var question = recordDict.ContainsKey(" Question") ? recordDict[" Question"].ToString().Trim() : string.Empty;
+                            var option1 = recordDict.ContainsKey(" Option1") ? recordDict[" Option1"].ToString().Trim() : string.Empty;
+                            var option2 = recordDict.ContainsKey(" Option2") ? recordDict[" Option2"].ToString().Trim() : string.Empty;
+                            var option3 = recordDict.ContainsKey(" Option3") ? recordDict[" Option3"].ToString().Trim() : string.Empty;
+                            var option4 = recordDict.ContainsKey(" Option4") ? recordDict[" Option4"].ToString().Trim() : string.Empty;
+                            var answer = recordDict.ContainsKey(" Answer") ? recordDict[" Answer"].ToString().Trim() : string.Empty;
+
+                            // Create a new CommonQuestion object
+                            var commonQuestion = new CommonQuestion
                             {
-                                if (!isHeaderRowSkipped)
-                                {
-                                    isHeaderRowSkipped = true;
-                                    continue;
-                                }
-                                CommonQuestion commonQuestion = new CommonQuestion();
-                                commonQuestion.Question = reader.GetValue(0).ToString();
-                                commonQuestion.Option1 = reader.GetValue(1).ToString();
-                                commonQuestion.Option2 = reader.GetValue(2).ToString();
-                                commonQuestion.Option3 = reader.GetValue(3).ToString();
-                                commonQuestion.Option4 = reader.GetValue(4).ToString();
-                                commonQuestion.Answer = reader.GetValue(5).ToString();
-                                commonQuestion.CreatedBY = HttpContext.Session.GetString("empID");
-                                if(!_context.commonquestions.Any(d=> d.Question == reader.GetValue(0).ToString()))
-                                {
-                                    _context.commonquestions.Add(commonQuestion);
-                                    _context.SaveChanges();
-                                }
-                                else { continue; }
-                                
-                             
-                            }
-                        } while (reader.NextResult());
+                                Question = question,
+                                Option1 = option1,
+                                Option2 = option2,
+                                Option3 = option3,
+                                Option4 = option4,
+                                Answer = answer,
+                                CreatedBY = HttpContext.Session.GetString("empID") // Retrieve from session
+                            };
 
+                            // Check if the question already exists
+                            if (!_context.commonquestions.Any(d => d.Question == question))
+                            {
+                                // Add the new question and save changes
+                                _context.commonquestions.Add(commonQuestion);
+                                await _context.SaveChangesAsync();
+                            }
+                        }
+                    }
+                }
+                if (fileExtension == ".xsls")
+                {
+                    using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+
+                            do
+                            {
+                                bool isHeaderRowSkipped = false;
+
+                                while (reader.Read())
+                                {
+                                    if (!isHeaderRowSkipped)
+                                    {
+                                        isHeaderRowSkipped = true;
+                                        continue;
+                                    }
+                                    CommonQuestion commonQuestion = new CommonQuestion();
+                                    commonQuestion.Question = reader.GetValue(0).ToString();
+                                    commonQuestion.Option1 = reader.GetValue(1).ToString();
+                                    commonQuestion.Option2 = reader.GetValue(2).ToString();
+                                    commonQuestion.Option3 = reader.GetValue(3).ToString();
+                                    commonQuestion.Option4 = reader.GetValue(4).ToString();
+                                    commonQuestion.Answer = reader.GetValue(5).ToString();
+                                    commonQuestion.CreatedBY = HttpContext.Session.GetString("empID");
+                                    if (!_context.commonquestions.Any(d => d.Question == reader.GetValue(0).ToString()))
+                                    {
+                                        _context.commonquestions.Add(commonQuestion);
+                                        _context.SaveChanges();
+                                    }
+                                    else { continue; }
+
+
+                                }
+                            } while (reader.NextResult());
+
+                        }
                     }
                 }
 

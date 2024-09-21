@@ -93,10 +93,9 @@ namespace Pkt.Controllers
             {
                 var row = _context.auths.Where(d => d.EmpID == EmployeeId).FirstOrDefault();
                 bool passwordsMatch = PasswordHelper.VerifyPassword(Password, row.Password, row.PasswordKey);
+             
                 if (passwordsMatch)
                 {
-
-
                     HttpContext.Session.SetString("empName", row.Name);
                     HttpContext.Session.SetString("empID", row.EmpID);
                     HttpContext.Session.SetString("OH", row.OH);

@@ -264,3 +264,5 @@ D:\Pkt\bin\Debug\net8.0\System.Net.Http.Formatting.dll
 D:\Pkt\bin\Debug\net8.0\System.Web.Http.dll
 D:\Pkt\bin\Debug\net8.0\System.Web.Http.WebHost.dll
 D:\Pkt\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+D:\Pkt\obj\Debug\net8.0\Pkt.sourcelink.json
+D:\Pkt\bin\Debug\net8.0\CsvHelper.dll

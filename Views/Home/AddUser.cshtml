@@ -226,6 +226,18 @@
     }
  <script>
 
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
         $(document).ready(function () {
             $("#changepwd").change(function () {
                 if ($(this).is(":checked")) {
@@ -249,7 +261,7 @@
         {
             if (confirm("Are you sure want to delete ")) { 
                 $.ajax({
-                    url: "/Home/DeleteUser/" + id,
+                    url: controllerUrl + "/Home/DeleteUser/" + id,
                     type: "GET",
                     success: function (response) {
 
@@ -272,7 +284,7 @@
         function edit(id) {
          
             $.ajax({
-                url:"/Home/EditUser/"+id,
+                url: controllerUrl + "/Home/EditUser/"+id,
                 type:"GET",
                 success: function (response) {
                     console.log(response);
@@ -383,7 +395,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: $(this).attr('action'),
+                    url: controllerUrl + $(this).attr('action'),
                     dataType: 'text',
                     headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
                     data: {

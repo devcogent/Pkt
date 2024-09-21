@@ -128,6 +128,20 @@
     }
 
     <script>
+
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
+
         $(function () {
            
             $('#quickForm').validate({
@@ -162,7 +176,7 @@
                if(confirm("are you sure want to delete question ?"))
                {
                     $.ajax({
-                        url: 'CommonQuestions/Delete/' + id,
+                        url: controllerUrl + 'CommonQuestions/Delete/' + id,
                         type: 'GET',
                         success: function (response) {
                             if (response.success) {

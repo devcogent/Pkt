@@ -37,7 +37,7 @@
                                 <div class="form-group col-md-4 col-lg-4">
                                     &nbsp;<label for="exampleInputEmail1"> </label>
                                     <div class="mt-2">
-                                        &nbsp; &nbsp; <a href="/dist/assignpkt.xlsx" title="upload format"><i class="fa fa-download" aria-hidden="true"> &nbsp; Download Format</i></a>
+                                        &nbsp; &nbsp; <a href="/dist/assignpkt.csv" title="upload format"><i class="fa fa-download" aria-hidden="true"> &nbsp; Download Format</i></a>
                                     </div>
                                 </div>
                              </div>
@@ -50,6 +50,39 @@
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
+
+                <div class="row assignList">
+                    <div class="col-12">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h2 class="card-title"><b>Assigned PKT</b></h2>
+                             </div>
+                          <div class="card-body" id="assignedPKT">
+                                <table id="example22" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                PKT Name
+                                            </th>
+                                            <th>
+                                                Employee ID
+                                            </th>
+                                            <th>
+                                                Created On
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                    </div>
+                    <!-- /.col -->
+                </div>
             </div>
             <!-- /.col -->
         </div>
@@ -62,9 +95,23 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
      <script>
+
+
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
         $(function () {
               $.ajax({
-                url: '/ManagePkts/GetPktList',
+                url: controllerUrl + '/ManagePkts/GetPktList',
                 type: 'GET',
                 success: function (response) {
                     $.each(response, function (key, val) {
@@ -94,7 +141,48 @@
                     $(element).removeClass('is-invalid');
                 }
             });
+
         });
     </script>
+
+    <script>
+
+        $(function () {
+            $('.assignList').hide();
+            $('#pkt').on('change', function () {
+                if ($(this).val() == "") {
+                    $('.assignList').hide();
+                }
+                $.ajax({
+                    url: controllerUrl + '/ManagePkts/assignedList',
+                    type: 'POST',
+                    dataType: 'text',
+                    headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
+                    data: {
+                        PKTName: $(this).val(),
+                    },
+                    success: function (response) {
+                        if (response.length > 0) {
+                            $('.assignList').show();
+                            var jsonArray = JSON.parse(response);
+                            var html = '';
+                            $.each(jsonArray, function (key, val) {
+                                html += '<tr>' +
+                                    '<td>' + val.pktName + '</td>' +
+                                    '<td>' + val.userId + '</td>' +
+                                    '<td>' + val.createdOn + '</td>' +
+                                    '</tr>';
+
+                            });
+                            $('#example22 tbody').html(html);
+                            $('#example22').DataTable();
+                        }
+                    }
+                });
+             });
+         });
+    </script>
+
+
 
 }

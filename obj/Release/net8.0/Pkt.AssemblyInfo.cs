@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pkt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65f164ad66afc46ce0ab5441eefbc9ee779ac59a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pkt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pkt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

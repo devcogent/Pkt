@@ -13,32 +13,16 @@
       "PackagePath": "staticwebassets\\assets\\css\\bd-wizard.css.map"
     },
     {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\icon_branding.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\icon_branding.svg"
+      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\CogentLogo.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\CogentLogo.svg"
     },
     {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\icon_branding_green.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\icon_branding_green.svg"
+      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\favicon.png",
+      "PackagePath": "staticwebassets\\assets\\images\\favicon.png"
     },
     {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\icon_mobile_design.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\icon_mobile_design.svg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\icon_mobile_design_green.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\icon_mobile_design_green.svg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\icon_web_design.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\icon_web_design.svg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\icon_web_design_green.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\icon_web_design_green.svg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\logo.svg",
-      "PackagePath": "staticwebassets\\assets\\images\\logo.svg"
+      "Id": "D:\\Pkt\\wwwroot\\assets\\images\\logo.png",
+      "PackagePath": "staticwebassets\\assets\\images\\logo.png"
     },
     {
       "Id": "D:\\Pkt\\wwwroot\\assets\\js\\bd-wizard.js",
@@ -517,8 +501,8 @@
       "PackagePath": "staticwebassets\\dist\\UploadFormatePapper.csv"
     },
     {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\assignpkt.xlsx",
-      "PackagePath": "staticwebassets\\dist\\assignpkt.xlsx"
+      "Id": "D:\\Pkt\\wwwroot\\dist\\assignpkt.csv",
+      "PackagePath": "staticwebassets\\dist\\assignpkt.csv"
     },
     {
       "Id": "D:\\Pkt\\wwwroot\\dist\\css\\adminlte.css",
@@ -633,138 +617,6 @@
       "PackagePath": "staticwebassets\\dist\\css\\alt\\adminlte.plugins.min.css.map"
     },
     {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\AdminLTELogo.png",
-      "PackagePath": "staticwebassets\\dist\\img\\AdminLTELogo.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\avatar.png",
-      "PackagePath": "staticwebassets\\dist\\img\\avatar.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\avatar2.png",
-      "PackagePath": "staticwebassets\\dist\\img\\avatar2.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\avatar3.png",
-      "PackagePath": "staticwebassets\\dist\\img\\avatar3.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\avatar4.png",
-      "PackagePath": "staticwebassets\\dist\\img\\avatar4.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\avatar5.png",
-      "PackagePath": "staticwebassets\\dist\\img\\avatar5.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\boxed-bg.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\boxed-bg.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\boxed-bg.png",
-      "PackagePath": "staticwebassets\\dist\\img\\boxed-bg.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\credit\\american-express.png",
-      "PackagePath": "staticwebassets\\dist\\img\\credit\\american-express.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\credit\\cirrus.png",
-      "PackagePath": "staticwebassets\\dist\\img\\credit\\cirrus.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\credit\\mastercard.png",
-      "PackagePath": "staticwebassets\\dist\\img\\credit\\mastercard.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\credit\\paypal.png",
-      "PackagePath": "staticwebassets\\dist\\img\\credit\\paypal.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\credit\\paypal2.png",
-      "PackagePath": "staticwebassets\\dist\\img\\credit\\paypal2.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\credit\\visa.png",
-      "PackagePath": "staticwebassets\\dist\\img\\credit\\visa.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\default-150x150.png",
-      "PackagePath": "staticwebassets\\dist\\img\\default-150x150.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\icons.png",
-      "PackagePath": "staticwebassets\\dist\\img\\icons.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\photo1.png",
-      "PackagePath": "staticwebassets\\dist\\img\\photo1.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\photo2.png",
-      "PackagePath": "staticwebassets\\dist\\img\\photo2.png"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\photo3.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\photo3.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\photo4.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\photo4.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\prod-1.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\prod-1.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\prod-2.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\prod-2.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\prod-3.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\prod-3.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\prod-4.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\prod-4.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\prod-5.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\prod-5.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user1-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user1-128x128.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user2-160x160.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user2-160x160.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user3-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user3-128x128.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user4-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user4-128x128.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user5-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user5-128x128.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user6-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user6-128x128.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user7-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user7-128x128.jpg"
-    },
-    {
-      "Id": "D:\\Pkt\\wwwroot\\dist\\img\\user8-128x128.jpg",
-      "PackagePath": "staticwebassets\\dist\\img\\user8-128x128.jpg"
-    },
-    {
       "Id": "D:\\Pkt\\wwwroot\\dist\\js\\.eslintrc.json",
       "PackagePath": "staticwebassets\\dist\\js\\.eslintrc.json"
     },
@@ -803,6 +655,10 @@
     {
       "Id": "D:\\Pkt\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\Pkt\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
     },
     {
       "Id": "D:\\Pkt\\wwwroot\\js\\site.js",

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Ng+ZTZp9PL3Y7Kwe+Jf+vErx5tQTV8Y64aJOMY7Bq0f8Z1JluvpOg0PGLrakLnU08SbAxXPKWYTDEHsmNcfUrw==",
+  "dgSpecHash": "bzuamONxupGH3yaU/lCtkTMxros1GoNPSMoh3hN784If/BGz6eAe4BppQgpykGG7woeOts7jdD7zRU7fbSQiFQ==",
   "success": true,
   "projectFilePath": "D:\\Pkt\\Pkt.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Cogent\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Cogent\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\Cogent\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512",
     "C:\\Users\\Cogent\\.nuget\\packages\\exceldatareader\\3.6.0\\exceldatareader.3.6.0.nupkg.sha512",
     "C:\\Users\\Cogent\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\Cogent\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

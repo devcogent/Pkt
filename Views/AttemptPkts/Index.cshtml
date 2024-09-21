@@ -140,6 +140,19 @@
     }
 
     <script>
+
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
         $(function () {
 
            
@@ -194,7 +207,7 @@
         $('.editButton').on('click', function () {
             var val = $(this).attr('id');
             $.ajax({
-                url: '/AttemptPkts/GetRowAttemptPkts/'+val,
+                url: controllerUrl + '/AttemptPkts/GetRowAttemptPkts/'+val,
                 type: 'GET',
                 success: function (response) {
                     $('#id').val(response.id);
@@ -220,7 +233,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: $(this).attr('action'),
+                    url: controllerUrl + $(this).attr('action'),
                     dataType: 'text',
                     headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
                     data: {

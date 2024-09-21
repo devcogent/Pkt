@@ -61,10 +61,24 @@
     }
 
     <script>
+
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
+
         $(function () {
 
             $.ajax({
-                url: '/AttemptPkts/GetPktName',
+                url: controllerUrl + '/AttemptPkts/GetPktName',
                 type: 'GET',
                 success: function (response) {
                  
@@ -85,8 +99,9 @@
 
             $('#pktname').on('change', function () {
                 var val = $(this).val();
+                
                 $.ajax({
-                    url: 'GetCountDuration/' + val,
+                    url: controllerUrl + '/AttemptPkts/GetCountDuration/' + val,
                     type: 'GET',
                     success: function (response) {
                        $('#duration').val(response);

@@ -17,7 +17,12 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using Pkt.Data;
 using Pkt.Models;
 using Pkt.Models.Entites;
+using CsvHelper;
+
+
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using CsvHelper.Configuration;
+using System.Globalization;
 
 
 
@@ -201,8 +206,8 @@ namespace Pkt.Controllers
         {
             var employeeID = HttpContext.Session.GetString("empID");
             var query = from pkt in _context.managepkt
-                        where (pkt.CreatedBy == employeeID && pkt.StartDate < DateTime.Now) ||
-                              ((pkt.StartDate == null || pkt.StartDate == null && pkt.CreatedBy == employeeID))
+                        where (pkt.StartDate > DateTime.Now && pkt.EndDate > DateTime.Now)||
+                              ((pkt.StartDate == null || pkt.EndDate == null))
                         orderby pkt.Id descending select new { pkt.Name, pkt.Id };
             var result = query.ToList();
             return new JsonResult(result);
@@ -275,9 +280,6 @@ namespace Pkt.Controllers
 
             return Json(new { message = "PKT Manage Updated Failed !", error = true, StatusCode = 302 });
         }
-
-
-        
 
         // GET: ManagePkts/Create
         public async Task<IActionResult>  Create()
@@ -361,34 +363,76 @@ namespace Pkt.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+
+                 var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+                if(fileExtension == ".csv")
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    
+                    using (var reader = new StreamReader(filePath))
+                    using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
                     {
+                        var records = csv.GetRecords<dynamic>().ToList();
+                        bool isHeaderRowSkipped = false;
 
-                        do
+                        foreach (var record in records)
                         {
-                            bool isHeaderRowSkipped = false;
-
-                            while (reader.Read())
+                            /*if (!isHeaderRowSkipped)
                             {
-                                if (!isHeaderRowSkipped)
-                                {
-                                    isHeaderRowSkipped = true;
-                                    continue;
-                                }
-                                PktFor manage = new PktFor();
-                                manage.PktName = pkt.PktName;
-                                manage.UserId = reader.GetValue(0).ToString();
-                                manage.CreatedBy = HttpContext.Session.GetString("empID");
-                                if (!_context.pktFors.Any(d => d.UserId == reader.GetValue(0).ToString() && d.PktName == pkt.PktName))
-                                {
-                                    _context.pktFors.Add(manage);
-                                    _context.SaveChanges();
-                                }
-                                else { continue; }
+                                isHeaderRowSkipped = true;
+                                continue; // Skip the header row
+                            }*/
+
+                            var recordDict = (IDictionary<string, object>)record;
+                            var userId = recordDict["EmployeeID"].ToString(); // Replace with your actual column name
+
+                            var manage = new PktFor
+                            {
+                                PktName = pkt.PktName,
+                                UserId = userId,
+                                CreatedBy = HttpContext.Session.GetString("empID")
+                            };
+
+                            if (!_context.pktFors.Any(d => d.UserId == userId && d.PktName == pkt.PktName))
+                            {
+                                _context.pktFors.Add(manage);
+                                _context.SaveChanges();
                             }
-                        } while (reader.NextResult());
+                        }
+                    }
+                }
+                if (fileExtension == ".xlsx")
+                {
+                 
+                    using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+
+                            do
+                            {
+                                bool isHeaderRowSkipped = false;
+
+                                while (reader.Read())
+                                {
+                                    if (!isHeaderRowSkipped)
+                                    {
+                                        isHeaderRowSkipped = true;
+                                        continue;
+                                    }
+                                    PktFor manage = new PktFor();
+                                    manage.PktName = pkt.PktName;
+                                    manage.UserId = reader.GetValue(0).ToString();
+                                    manage.CreatedBy = HttpContext.Session.GetString("empID");
+                                    if (!_context.pktFors.Any(d => d.UserId == reader.GetValue(0).ToString() && d.PktName == pkt.PktName))
+                                    {
+                                        _context.pktFors.Add(manage);
+                                        _context.SaveChanges();
+                                    }
+                                    else { continue; }
+                                }
+                            } while (reader.NextResult());
+                        }
                     }
                 }
                 TempData["Success"] = "PKT Assigned To User Successfully";
@@ -398,9 +442,9 @@ namespace Pkt.Controllers
             return View();
         }
 
-
-        // GET: ManagePkts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+      
+    // GET: ManagePkts/Delete/5
+    public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -428,5 +472,12 @@ namespace Pkt.Controllers
         {
             return _context.managepkt.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> assignedList(string pktName)
+        {
+            var rows = _context.pktFors.Where(d => d.PktName == pktName).ToList();
+            return new JsonResult(rows);
+         }
     }
 }

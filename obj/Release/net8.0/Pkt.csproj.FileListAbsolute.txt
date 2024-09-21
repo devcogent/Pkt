@@ -264,3 +264,5 @@ D:\Pkt\obj\Release\net8.0\refint\Pkt.dll
 D:\Pkt\obj\Release\net8.0\Pkt.pdb
 D:\Pkt\obj\Release\net8.0\Pkt.genruntimeconfig.cache
 D:\Pkt\obj\Release\net8.0\ref\Pkt.dll
+D:\Pkt\obj\Release\net8.0\Pkt.sourcelink.json
+D:\Pkt\bin\Release\net8.0\CsvHelper.dll

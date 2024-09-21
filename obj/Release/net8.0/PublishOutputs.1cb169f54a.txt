@@ -6,6 +6,7 @@ D:\Pkt\obj\Release\net8.0\PubTmp\Out\Pkt.runtimeconfig.json
 D:\Pkt\obj\Release\net8.0\PubTmp\Out\Pkt.pdb
 D:\Pkt\obj\Release\net8.0\PubTmp\Out\Azure.Core.dll
 D:\Pkt\obj\Release\net8.0\PubTmp\Out\Azure.Identity.dll
+D:\Pkt\obj\Release\net8.0\PubTmp\Out\CsvHelper.dll
 D:\Pkt\obj\Release\net8.0\PubTmp\Out\ExcelDataReader.dll
 D:\Pkt\obj\Release\net8.0\PubTmp\Out\Humanizer.dll
 D:\Pkt\obj\Release\net8.0\PubTmp\Out\System.Net.Http.Formatting.dll

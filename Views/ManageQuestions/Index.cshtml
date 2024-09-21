@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <table id="QuesTable" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>
@@ -255,7 +255,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="QuesTable">
+                            <tbody>
                                 
                             </tbody>
                         </table>
@@ -362,6 +362,21 @@
      }
     
     <script>
+
+
+        var baseUrl = window.location.origin;
+        var controllerUrl = baseUrl;
+        const urlObject = new URL(baseUrl);
+        const hasPort = urlObject.port !== "" && !isNaN(parseInt(urlObject.port));
+
+        if (hasPort) {
+            controllerUrl = baseUrl;
+        }
+        else {
+            controllerUrl = baseUrl + '/pkt';
+        }
+
+
         var checkAllCheckbox = document.getElementById('checkAll');
         var checkboxes = document.getElementsByClassName('checkbox');
         checkAllCheckbox.addEventListener('change', function () {
@@ -383,7 +398,7 @@
 
         function edit(id) {
             $.ajax({
-                url: '/ManagePkts/EditQuestion/' + id,
+                url: controllerUrl + '/ManagePkts/EditQuestion/' + id,
                 type: 'get',
                 success: function (response) {
                     if (response.error) {
@@ -412,7 +427,7 @@
             if (confirm("Are You Sure Want To delete ?")) 
             { 
                 $.ajax({
-                    url: '/ManagePkts/DeleteQuestion/'+id,
+                    url: controllerUrl + '/ManagePkts/DeleteQuestion/'+id,
                     type: 'get',
                     success: function (response) {
                         if (response.success) {
@@ -437,7 +452,7 @@
 
             $('.questionList').hide();
             $.ajax({
-                url: "/ManagePkts/GetPktList",
+                url: controllerUrl + "/ManagePkts/GetPktList",
                 type:'get',
                 success: function (response) {
                     $.each(response, function (item , value) {
@@ -453,7 +468,7 @@
                     $('.questionList').hide();
                 }
                   $.ajax({
-                    url:'/ManagePkts/QuestionList',
+                    url: controllerUrl + '/ManagePkts/QuestionList',
                     type:'POST',
                     dataType: 'text',
                     headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
@@ -472,9 +487,11 @@
                                     '<td>' + val.question + '</td>' +
                                     '<td>' + val.answer + '</td>' +
                                     '<td>' + val.createdOn + '</td>' +
-                                    '<td><a href="javascript:void(0)" onclick="edit(' + val.id + ');"><i class="fas fa-edit editQuestion"></i></a>&nbsp; <a href="javascript:void(0)" onclick="deleteQuestion(' + val.id + ');"  id="' + val.id + '"> <i class="fas fa-trash"></i></a></td>';
+                                    '<td><a href="javascript:void(0)" onclick="edit(' + val.id + ');"><i class="fas fa-edit editQuestion"></i></a>&nbsp; <a href="javascript:void(0)" onclick="deleteQuestion(' + val.id + ');"  id="' + val.id + '"> <i class="fas fa-trash"></i></a></td>'
+                                    +'</tr>';
                             });
-                          $('#QuesTable').html(html);
+                            $('#QuesTable tbody').html(html);
+                            $('#QuesTable').DataTable();
                          }
                      }
                 });
@@ -638,7 +655,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: $(this).attr('action'),
+                    url: controllerUrl + $(this).attr('action'),
                     dataType: 'text',
                     headers: { "RequestVerificationToken": '@Html.AntiForgeryToken()' },
                     data: {
